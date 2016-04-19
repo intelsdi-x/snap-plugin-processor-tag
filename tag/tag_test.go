@@ -59,7 +59,7 @@ func TestTagProcessor(t *testing.T) {
 			So(proc, ShouldNotBeNil)
 		})
 		Convey("So proc should be of type tagProcessor", func() {
-			So(proc, ShouldHaveSameTypeAs, &tagProcessor{})
+			So(proc, ShouldHaveSameTypeAs, &TagProcessor{})
 		})
 		Convey("proc.GetConfigPolicy should return a config policy", func() {
 			configPolicy, _ := proc.GetConfigPolicy()
@@ -86,7 +86,7 @@ func TestTagProcessorMetrics(t *testing.T) {
 
 		config["tags"] = ctypes.ConfigValueStr{Value: "rack:rack1,test:test1"}
 		Convey("Tag on some data, when publisher Tags_ is empty", func() {
-			for i, _ := range metrics {
+			for i := range metrics {
 				time.Sleep(3)
 				rand.Seed(time.Now().UTC().UnixNano())
 				data := randInt(65, 90)
@@ -114,7 +114,7 @@ func TestTagProcessorMetrics(t *testing.T) {
 		})
 		Convey("Tag on some data, when publisher Tags_ is populated", func() {
 			tags := map[string]string{"test1": "test1"}
-			for i, _ := range metrics {
+			for i := range metrics {
 				time.Sleep(3)
 				rand.Seed(time.Now().UTC().UnixNano())
 				data := randInt(65, 90)
@@ -143,7 +143,7 @@ func TestTagProcessorMetrics(t *testing.T) {
 		})
 		Convey("Tag on some data, when publisher Tags_ is populated and tags are overlapping", func() {
 			tags := map[string]string{"test": "test2"}
-			for i, _ := range metrics {
+			for i := range metrics {
 				time.Sleep(3)
 				rand.Seed(time.Now().UTC().UnixNano())
 				data := randInt(65, 90)
@@ -171,7 +171,7 @@ func TestTagProcessorMetrics(t *testing.T) {
 		})
 		config["tags"] = ctypes.ConfigValueStr{Value: "rack"}
 		Convey("Tag on some data, when tag config is broken", func() {
-			for i, _ := range metrics {
+			for i := range metrics {
 				time.Sleep(3)
 				rand.Seed(time.Now().UTC().UnixNano())
 				data := randInt(65, 90)

@@ -33,7 +33,7 @@ import (
 
 const (
 	name       = "tag"
-	version    = 1
+	version    = 2
 	pluginType = plugin.ProcessorPluginType
 )
 
@@ -42,15 +42,16 @@ func Meta() *plugin.PluginMeta {
 	return plugin.NewPluginMeta(name, version, pluginType, []string{plugin.SnapGOBContentType}, []string{plugin.SnapGOBContentType})
 }
 
-// NewTagProcessor returns a tagProcessor struct
-func NewTagProcessor() *tagProcessor {
-	return &tagProcessor{}
+// NewTagProcessor returns a TagProcessor struct
+func NewTagProcessor() *TagProcessor {
+	return &TagProcessor{}
 }
 
-type tagProcessor struct{}
+// TagProcessor struct
+type TagProcessor struct{}
 
 // GetConfigPolicy returns a config policy
-func (p *tagProcessor) GetConfigPolicy() (*cpolicy.ConfigPolicy, error) {
+func (p *TagProcessor) GetConfigPolicy() (*cpolicy.ConfigPolicy, error) {
 	cp := cpolicy.New()
 	config := cpolicy.NewPolicyNode()
 	r1, err := cpolicy.NewStringRule("tags", true)
@@ -83,7 +84,7 @@ func parseTags(tags string) map[string]string {
 }
 
 // Process process metrics
-func (p *tagProcessor) Process(contentType string, content []byte, config map[string]ctypes.ConfigValue) (string, []byte, error) {
+func (p *TagProcessor) Process(contentType string, content []byte, config map[string]ctypes.ConfigValue) (string, []byte, error) {
 	logger := log.New()
 	logger.Println("Tag processor started")
 	var metrics []plugin.PluginMetricType
@@ -98,10 +99,8 @@ func (p *tagProcessor) Process(contentType string, content []byte, config map[st
 		for i := range metrics {
 			tagMap := parseTags(tags)
 			if len(metrics[i].Tags_) == 0 {
-
 				metrics[i].Tags_ = tagMap
 			} else {
-
 				for k, v := range tagMap {
 					metrics[i].Tags_[k] = v
 				}
