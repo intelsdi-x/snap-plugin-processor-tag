@@ -30,6 +30,7 @@ import (
 
 	"github.com/intelsdi-x/snap/control/plugin"
 	"github.com/intelsdi-x/snap/control/plugin/cpolicy"
+	"github.com/intelsdi-x/snap/core"
 	"github.com/intelsdi-x/snap/core/ctypes"
 	. "github.com/smartystreets/goconvey/convey"
 )
@@ -81,7 +82,7 @@ func TestTagProcessor(t *testing.T) {
 
 func TestTagProcessorMetrics(t *testing.T) {
 	Convey("Tag Processor tests", t, func() {
-		metrics := make([]plugin.PluginMetricType, 10)
+		metrics := make([]plugin.MetricType, 10)
 		config := make(map[string]ctypes.ConfigValue)
 
 		config["tags"] = ctypes.ConfigValueStr{Value: "rack:rack1,test:test1"}
@@ -90,7 +91,7 @@ func TestTagProcessorMetrics(t *testing.T) {
 				time.Sleep(3)
 				rand.Seed(time.Now().UTC().UnixNano())
 				data := randInt(65, 90)
-				metrics[i] = *plugin.NewPluginMetricType([]string{"foo", "bar"}, time.Now(), "", nil, nil, data)
+				metrics[i] = *plugin.NewMetricType(core.NewNamespace("foo", "bar"), time.Now(), nil, "", data)
 			}
 			So(metrics[0].Tags_, ShouldBeNil)
 			var buf bytes.Buffer
@@ -101,7 +102,7 @@ func TestTagProcessorMetrics(t *testing.T) {
 
 			_, received_data, _ := tagObj.Process("snap.gob", buf.Bytes(), config)
 
-			var metrics_new []plugin.PluginMetricType
+			var metrics_new []plugin.MetricType
 
 			//Decodes the content into pluginMetricType
 			dec := gob.NewDecoder(bytes.NewBuffer(received_data))
@@ -118,7 +119,7 @@ func TestTagProcessorMetrics(t *testing.T) {
 				time.Sleep(3)
 				rand.Seed(time.Now().UTC().UnixNano())
 				data := randInt(65, 90)
-				metrics[i] = *plugin.NewPluginMetricType([]string{"foo", "bar"}, time.Now(), "", tags, nil, data)
+				metrics[i] = *plugin.NewMetricType(core.NewNamespace("foo", "bar"), time.Now(), tags, "", data)
 			}
 			So(metrics[0].Tags_["test1"], ShouldResemble, "test1")
 			So(metrics[0].Tags_, ShouldNotBeNil)
@@ -129,7 +130,7 @@ func TestTagProcessorMetrics(t *testing.T) {
 
 			_, received_data, _ := tagObj.Process("snap.gob", buf.Bytes(), config)
 
-			var metrics_new []plugin.PluginMetricType
+			var metrics_new []plugin.MetricType
 
 			//Decodes the content into pluginMetricType
 			dec := gob.NewDecoder(bytes.NewBuffer(received_data))
@@ -147,7 +148,7 @@ func TestTagProcessorMetrics(t *testing.T) {
 				time.Sleep(3)
 				rand.Seed(time.Now().UTC().UnixNano())
 				data := randInt(65, 90)
-				metrics[i] = *plugin.NewPluginMetricType([]string{"foo", "bar"}, time.Now(), "", tags, nil, data)
+				metrics[i] = *plugin.NewMetricType(core.NewNamespace("foo", "bar"), time.Now(), tags, "", data)
 			}
 			So(metrics[0].Tags_["test"], ShouldResemble, "test2")
 			So(metrics[0].Tags_, ShouldNotBeNil)
@@ -158,7 +159,7 @@ func TestTagProcessorMetrics(t *testing.T) {
 
 			_, received_data, _ := tagObj.Process("snap.gob", buf.Bytes(), config)
 
-			var metrics_new []plugin.PluginMetricType
+			var metrics_new []plugin.MetricType
 
 			//Decodes the content into pluginMetricType
 			dec := gob.NewDecoder(bytes.NewBuffer(received_data))
@@ -175,7 +176,7 @@ func TestTagProcessorMetrics(t *testing.T) {
 				time.Sleep(3)
 				rand.Seed(time.Now().UTC().UnixNano())
 				data := randInt(65, 90)
-				metrics[i] = *plugin.NewPluginMetricType([]string{"foo", "bar"}, time.Now(), "", nil, nil, data)
+				metrics[i] = *plugin.NewMetricType(core.NewNamespace("foo", "bar"), time.Now(), nil, "", data)
 			}
 			So(metrics[0].Tags_, ShouldBeNil)
 			var buf bytes.Buffer
@@ -185,7 +186,7 @@ func TestTagProcessorMetrics(t *testing.T) {
 
 			_, received_data, _ := tagObj.Process("snap.gob", buf.Bytes(), config)
 
-			var metrics_new []plugin.PluginMetricType
+			var metrics_new []plugin.MetricType
 
 			//Decodes the content into pluginMetricType
 			dec := gob.NewDecoder(bytes.NewBuffer(received_data))
