@@ -33,7 +33,7 @@ import (
 
 const (
 	name       = "tag"
-	version    = 2
+	version    = 3
 	pluginType = plugin.ProcessorPluginType
 )
 
@@ -87,7 +87,7 @@ func parseTags(tags string) map[string]string {
 func (p *TagProcessor) Process(contentType string, content []byte, config map[string]ctypes.ConfigValue) (string, []byte, error) {
 	logger := log.New()
 	logger.Println("Tag processor started")
-	var metrics []plugin.PluginMetricType
+	var metrics []plugin.MetricType
 
 	dec := gob.NewDecoder(bytes.NewBuffer(content))
 	if err := dec.Decode(&metrics); err != nil {
