@@ -195,8 +195,6 @@ func TestTagProcessorMetrics(t *testing.T) {
 			emptyMap := make(map[string]string)
 			So(metrics_new[0].Tags_, ShouldResemble, emptyMap)
 			So(metrics, ShouldNotResemble, metrics_new)
-
 		})
-
 	})
 }
