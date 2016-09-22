@@ -66,7 +66,6 @@ func (p *TagProcessor) GetConfigPolicy() (*cpolicy.ConfigPolicy, error) {
 func handleErr(err error) {
 	if err != nil {
 		panic(err)
-
 	}
 }
 
@@ -104,7 +103,6 @@ func (p *TagProcessor) Process(contentType string, content []byte, config map[st
 				for k, v := range tagMap {
 					metrics[i].Tags_[k] = v
 				}
-
 			}
 		}
 	}
