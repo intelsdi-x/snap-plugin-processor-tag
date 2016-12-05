@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "schedule": {
+    "type": "simple",
+    "interval": "1s"
+  },
+  "workflow": {
+    "collect": {
+      "metrics": {
+        "/intel/psutil/net/*/packets_recv": {}
+      },
+      "process": [
+        {
+          "plugin_name": "tag",
+          "config": {
+            "tags": "rack1:rack,datacenter:dublin,experiment:1"
+          },
+          "publish": [
+            {
+              "plugin_name": "file",
+              "config": {
+                "file": "/tmp/published_tag_dynamic_metrics.log"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
