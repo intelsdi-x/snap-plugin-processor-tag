@@ -6,10 +6,10 @@ Snap plugin intended to process data and add tags to the data. Please notice tha
 1. [Getting Started](#getting-started)
   * [System Requirements](#system-requirements)
   * [Installation](#installation)
-  * [Configuration and Usage](configuration-and-usage)
+  * [Configuration and Usage](#configuration-and-usage)
 2. [Documentation](#documentation)
   * [Examples](#examples)
-  * [Roadmap] (#roadmap)
+  * [Roadmap](#roadmap)
 3. [Community Support](#community-support)
 4. [Contributing](#contributing)
 5. [License](#license)
@@ -67,48 +67,46 @@ See available metrics for your system
 $ snaptel metric list
 ```
 
-Create a task file. For example, sample-psutil-tag-task.json:
+Create a task file. For example, psutil-tag-file.json:
 ```
 {
-    "version": 1,
-    "schedule": {
-        "type": "simple",
-        "interval": "1s"
-    },
-    "workflow": {
-        "collect": {
-            "metrics": {
-                "/intel/psutil/load/load1": {},
-                "/intel/psutil/load/load5": {},
-                "/intel/psutil/load/load15": {},
-                "/intel/psutil/vm/free": {},
-                "/intel/psutil/vm/used": {}
-            },
-            "process": [
-                {
-                    "plugin_name": "tag",
-                    "config":
-                        {
-                            "tags": "rack1:rack,datacenter:dublin,experiment:1"
-                        }
-                    "process": null,
-                    "publish": [
-                        {
-                            "plugin_name": "file",
-                            "config": {
-                               "file": "tmp/published"
-                            }
-                        }
-                    ]
-                }
-            ]
+  "version": 1,
+  "schedule": {
+    "type": "simple",
+    "interval": "1s"
+  },
+  "workflow": {
+    "collect": {
+      "metrics": {
+        "/intel/psutil/load/load1": {},
+        "/intel/psutil/load/load5": {},
+        "/intel/psutil/load/load15": {},
+        "/intel/psutil/vm/free": {},
+        "/intel/psutil/vm/used": {}
+      },
+      "process": [
+        {
+          "plugin_name": "tag",
+          "config": {
+            "tags": "rack1:rack,datacenter:dublin,experiment:1"
+          },
+          "publish": [
+            {
+              "plugin_name": "file",
+              "config": {
+                "file": "/tmp/published_tag.log"
+              }
+            }
+          ]
         }
+      ]
     }
+  }
 }
 ```
 Start task:
 ```
-$ snaptel task create -t sample-psutil-tag-task.json
+$ snaptel task create -t psutil-tag-file.json
 Using task manifest to create task
 Task created
 ID: 02dd7ff4-8106-47e9-8b86-70067cd0a850
@@ -121,7 +119,7 @@ See realtime output from `snaptel task watch <task_id>` (CTRL+C to exit)
 snaptel task watch 02dd7ff4-8106-47e9-8b86-70067cd0a850
 ```
 
-This data is published to a file `/tmp/published` per task specification
+This data is published to a file `/tmp/published_tag.log` per task specification
 
 Stop task:
 ```
@@ -144,7 +142,7 @@ We love contributions!
 There's more than one way to give back, from examples to blogs to code updates. See our recommended process in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
-[Snap](http://github.com:intelsdi-x/snap), along with this plugin, is an Open Source software released under the Apache 2.0 [License](LICENSE).
+[Snap](http://github.com/intelsdi-x/snap), along with this plugin, is an Open Source software released under the Apache 2.0 [License](LICENSE).
 
 ## Acknowledgements
 
