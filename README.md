@@ -1,7 +1,10 @@
 [![Build Status](https://api.travis-ci.org/intelsdi-x/snap-plugin-processor-tag.svg)](https://travis-ci.org/intelsdi-x/snap-plugin-processor-tag)
 [![Go Report Card](http://goreportcard.com/badge/intelsdi-x/snap-plugin-processor-tag)](http://goreportcard.com/report/intelsdi-x/snap-plugin-processor-tag)
 # Snap plugin processor - tag
-Snap plugin intended to process data and add tags to the data. Please notice that not every Snap publisher plugin support tagging.
+Snap plugin intended to process data and add tags to the data.
+
+Please notice that tags can be added also through configuration in task manifest (for details see [documentation](https://github.com/intelsdi-x/snap/blob/master/docs/TASKS.md)) and
+not every Snap publisher plugin support tagging.
 
 1. [Getting Started](#getting-started)
   * [System Requirements](#system-requirements)
